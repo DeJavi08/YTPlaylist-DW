@@ -14,20 +14,16 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.NODE_ENV === 'production' 
-      ? ['https://flash-convert.vercel.app']  // Update this with your frontend URL
-      : ["http://localhost:5173"],
+    origin: '*', // Allow all origins in development
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling']
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? 'https://flash-convert.vercel.app'  // Update this with your frontend URL
-    : 'http://localhost:5173'
+  origin: '*' // Allow all origins in development
 }));
 app.use(express.json());
 
