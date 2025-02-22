@@ -6,8 +6,8 @@ buildCommand = "npm install"
 startCommand = "node server/index.js"
 healthcheckPath = "/"
 healthcheckTimeout = 100
-restartPolicyType = "on-failure"
-restartPolicyMaxRetries = 10
+restartPolicy = "on-failure"
+maxRetries = 10
 
 [deploy.env]
 NODE_ENV = "production"
