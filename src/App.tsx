@@ -300,42 +300,60 @@ function App() {
             </div>
           </div>
 
-          {/* Advertisement Section */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Premium Music Production Tools */}
-            <a 
-              href="https://www.bandlab.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">BandLab</h3>
-                <ExternalLink className="w-5 h-5 text-orange-500" />
-              </div>
-              <p className="text-sm text-gray-600 mb-3">
-                Create, collaborate, and share your music with the world. Free online DAW and music production tools.
-              </p>
-              <span className="text-orange-500 text-sm font-medium">Learn More →</span>
-            </a>
+          {/* Development Team */}
+<div className="mt-12">
+  <h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">Meet the Developers</h2>
+  
+  <div className="overflow-x-auto flex space-x-6 p-4 hide-scrollbar">
+    {[
+      {
+        name: "DeJavi08",
+        image: "https://github.com/DeJavi08/YTPlaylist-DW/blob/master/src/dejavi.jpg",
+        link: "https://github.com/DeJavi08/",
+      },
+      {
+        name: "D38R15",
+        image: "https://github.com/DeJavi08/YTPlaylist-DW/blob/master/src/wokabi.jpg",
+        link: "https://github.com/Hamzah82",
+      },
+      {
+        name: "DevilGun",
+        image: "https://github.com/DeJavi08/YTPlaylist-DW/blob/master/src/electrogaming.png",
+        link: "https://github.com/WeebCoderr",
+      },
+    ].map((member) => (
+      <div key={member.name} className="flex-none w-48 bg-white shadow-md rounded-lg p-4 text-center">
+        <img
+          src={member.image}
+          alt={member.name}
+          className="w-24 h-24 mx-auto rounded-full object-cover"
+        />
+        <a
+          href={member.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block mt-3 text-lg font-semibold text-orange-500 hover:underline"
+        >
+          {member.name}
+        </a>
+      </div>
+    ))}
+  </div>
+</div>
 
-            {/* Music Distribution Service */}
-            <a 
-              href="https://distrokid.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">DistroKid</h3>
-                <ExternalLink className="w-5 h-5 text-orange-500" />
-              </div>
-              <p className="text-sm text-gray-600 mb-3">
-                Distribute your music to Spotify, Apple Music, and more. Keep 100% of your earnings.
-              </p>
-              <span className="text-orange-500 text-sm font-medium">Start Distribution →</span>
-            </a>
-          </div>
+{/* Donation Link */}
+<div className="mt-8 text-center">
+  <p className="text-gray-600">Support the development of this project with a donation:</p>
+  <a
+    href="https://saweria.co/DeJavi08"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-2 inline-block bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 transition"
+  >
+    Donate Now
+  </a>
+</div>
+
 
           {/* Footer */}
           <div className="mt-8 text-center text-sm text-gray-500">
