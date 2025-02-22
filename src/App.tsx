@@ -308,17 +308,17 @@ function App() {
     {[
       {
         name: "DeJavi08",
-        image: "https://github.com/DeJavi08/YTPlaylist-DW/blob/master/src/dejavi.jpg",
+        image: "https://raw.githubusercontent.com/DeJavi08/YTPlaylist-DW/refs/heads/master/src/dejavi.jpg",
         link: "https://github.com/DeJavi08/",
       },
       {
         name: "D38R15",
-        image: "https://github.com/DeJavi08/YTPlaylist-DW/blob/master/src/wokabi.jpg",
+        image: "https://raw.githubusercontent.com/DeJavi08/YTPlaylist-DW/refs/heads/master/src/wokabi.jpg",
         link: "https://github.com/Hamzah82",
       },
       {
         name: "DevilGun",
-        image: "https://github.com/DeJavi08/YTPlaylist-DW/blob/master/src/electrogaming.png",
+        image: "https://raw.githubusercontent.com/DeJavi08/YTPlaylist-DW/refs/heads/master/src/electrogaming.png",
         link: "https://github.com/WeebCoderr",
       },
     ].map((member) => (
@@ -343,7 +343,7 @@ function App() {
 
 {/* Donation Link */}
 <div className="mt-8 text-center">
-  <p className="text-gray-600">Support the development of this project with a donation:</p>
+  <p className="text-gray-600">Support the development of this project with a donation!</p>
   <a
     href="https://saweria.co/DeJavi08"
     target="_blank"
@@ -353,12 +353,7 @@ function App() {
     Donate Now
   </a>
 </div>
-
-
-          {/* Footer */}
-          <div className="mt-8 text-center text-sm text-gray-500">
-            <p>Advertisements help keep this service free. Thank you for your support!</p>
-          </div>
+          
         </div>
       </div>
     </div>
