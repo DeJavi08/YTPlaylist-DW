@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Zap, Music4, Video, Loader2, Settings, ExternalLink } from 'lucide-react';
+import { Zap, Music4, Video, Loader2, Settings, Download, ExternalLink } from 'lucide-react';
 import io from 'socket.io-client';
 import { API_URL } from './config';
 
@@ -11,6 +11,12 @@ interface ConversionProgress {
   currentFile: string;
 }
 
+interface DownloadInfo {
+  filename: string;
+  title: string;
+  downloadUrl: string;
+}
+
 function App() {
   const [url, setUrl] = useState('');
   const [format, setFormat] = useState('mp3');
@@ -19,6 +25,7 @@ function App() {
   const [quality, setQuality] = useState(format === 'mp3' ? '192' : '720');
   const [progress, setProgress] = useState<ConversionProgress | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [downloads, setDownloads] = useState<DownloadInfo[]>([]);
 
   useEffect(() => {
     socket.on('conversionProgress', (data: ConversionProgress) => {
@@ -34,9 +41,23 @@ function App() {
       setIsLoading(false);
     });
 
+    socket.on('downloadReady', (downloadInfo: DownloadInfo) => {
+      setDownloads(prev => [...prev, downloadInfo]);
+    });
+
+    // Clear downloads when component unmounts or page refreshes
+    const handleBeforeUnload = () => {
+      setDownloads([]);
+      socket.disconnect();
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     return () => {
       socket.off('conversionProgress');
       socket.off('conversionError');
+      socket.off('downloadReady');
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
 
@@ -50,12 +71,14 @@ function App() {
     setIsLoading(true);
     setError(null);
     setProgress(null);
+    setDownloads([]);
 
     try {
       const response = await fetch(`${API_URL}/convert`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Socket-ID': socket.id
         },
         body: JSON.stringify({
           url,
@@ -68,8 +91,6 @@ function App() {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Conversion failed');
       }
-
-      // The actual conversion progress will be handled by the socket connection
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
       setIsLoading(false);
@@ -206,6 +227,27 @@ function App() {
                   <p className="text-sm text-gray-600 mt-2">
                     {progress.status}: {progress.currentFile}
                   </p>
+                </div>
+              )}
+
+              {/* Downloads Section */}
+              {downloads.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-700 mb-3">Ready for Download</h3>
+                  <div className="space-y-2">
+                    {downloads.map((download, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                        <span className="text-sm text-gray-700 truncate flex-1 mr-3">{download.title}</span>
+                        <a
+                          href={`${API_URL}${download.downloadUrl}`}
+                          className="flex items-center px-3 py-1 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
+                        >
+                          <Download className="w-4 h-4 mr-1" />
+                          Download
+                        </a>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
