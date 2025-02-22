@@ -12,9 +12,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const httpServer = createServer(app);
 
+// Track active conversions
+const activeConversions = new Map();
+
 const io = new Server(httpServer, {
   cors: {
-    origin: '*', // Allow all origins in development
+    origin: '*',
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling']
   }
@@ -23,11 +26,10 @@ const io = new Server(httpServer, {
 const PORT = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: '*' // Allow all origins in development
+  origin: '*'
 }));
 app.use(express.json());
 
-// Railway specific: Use /tmp directory for temporary files
 const outputDir = '/tmp/output';
 const tempDir = '/tmp/temp';
 
@@ -46,9 +48,31 @@ async function cleanupTemp(filePath) {
   }
 }
 
-// Health check endpoint for Railway
 app.get('/', (req, res) => {
   res.json({ status: 'healthy' });
+});
+
+// Endpoint to get file
+app.get('/download/:filename', async (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(outputDir, filename);
+  
+  try {
+    await fs.access(filePath);
+    res.download(filePath, filename, async (err) => {
+      if (err) {
+        console.error('Download error:', err);
+      }
+      // Delete file after download
+      try {
+        await fs.unlink(filePath);
+      } catch (error) {
+        console.error('Error deleting file after download:', error);
+      }
+    });
+  } catch (error) {
+    res.status(404).json({ message: 'File not found' });
+  }
 });
 
 app.post('/convert', async (req, res) => {
@@ -59,13 +83,31 @@ app.post('/convert', async (req, res) => {
     return res.status(400).json({ message: 'URL is required' });
   }
 
+  // Cancel any existing conversion for this socket
+  if (activeConversions.has(socketId)) {
+    activeConversions.get(socketId).cancelled = true;
+    activeConversions.delete(socketId);
+  }
+
   try {
+    // Create new conversion state
+    const conversionState = {
+      cancelled: false
+    };
+    activeConversions.set(socketId, conversionState);
+
     res.json({ message: 'Conversion started' });
 
     const playlistInfo = await getPlaylistInfo(url);
     const videos = playlistInfo.entries;
 
     for (let i = 0; i < videos.length; i++) {
+      // Check if conversion was cancelled
+      if (conversionState.cancelled) {
+        console.log('Conversion cancelled');
+        break;
+      }
+
       const video = videos[i];
       const progress = ((i / videos.length) * 100).toFixed(2);
 
@@ -75,18 +117,32 @@ app.post('/convert', async (req, res) => {
         currentFile: video.title
       });
 
-      await processVideo(video.url, format, quality, socketId);
+      const outputFilename = await processVideo(video.url, format, quality, socketId);
+      
+      if (outputFilename) {
+        // Emit download ready event with file info
+        io.emit('downloadReady', {
+          filename: outputFilename,
+          title: video.title,
+          downloadUrl: `/download/${outputFilename}`
+        });
+      }
     }
 
-    io.emit('conversionProgress', {
-      status: 'completed',
-      progress: 100,
-      currentFile: 'All files processed'
-    });
+    if (!conversionState.cancelled) {
+      io.emit('conversionProgress', {
+        status: 'completed',
+        progress: 100,
+        currentFile: 'All files processed'
+      });
+    }
+
+    activeConversions.delete(socketId);
 
   } catch (error) {
     console.error('Conversion error:', error);
     io.emit('conversionError', error.message);
+    activeConversions.delete(socketId);
   }
 });
 
@@ -125,8 +181,9 @@ async function getPlaylistInfo(url) {
 }
 
 async function processVideo(videoUrl, format, quality, socketId) {
+  const outputFilename = `output_${Date.now()}.${format}`;
   const tempFile = path.join(tempDir, `temp_${Date.now()}.${format}`);
-  const outputFile = path.join(outputDir, `output_${Date.now()}.${format}`);
+  const outputFile = path.join(outputDir, outputFilename);
 
   try {
     await downloadVideo(videoUrl, tempFile, format, quality);
@@ -138,6 +195,7 @@ async function processVideo(videoUrl, format, quality, socketId) {
     }
 
     await cleanupTemp(tempFile);
+    return outputFilename;
 
   } catch (error) {
     await cleanupTemp(tempFile);
@@ -199,6 +257,16 @@ setInterval(async () => {
     console.error('Cleanup error:', error);
   }
 }, 3600000); // Run every hour
+
+// Handle disconnections
+io.on('connection', (socket) => {
+  socket.on('disconnect', () => {
+    if (activeConversions.has(socket.id)) {
+      activeConversions.get(socket.id).cancelled = true;
+      activeConversions.delete(socket.id);
+    }
+  });
+});
 
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
