@@ -143,19 +143,17 @@ Here are the steps to use Flash Converter:
 ---
 
 ## About Developer
-
 👨‍💻 **DeJavi08**  
 🔗 **GitHub**: [https://github.com/DeJavi08](https://github.com/DeJavi08)  
-📜 **Source Code**: [https://github.com/DeJavi08/YTPlaylist-DW](https://github.com/DeJavi08/YTPlaylist-DW)
-
----
+📜 **Source Code**: [https://github.com/DeJavi08/YTPlaylist-DW](https://github.com/DeJavi08/YTPlaylist-DW)  
 
 ## Support & Donate ❤️
-
-If you find this project helpful, you can support me via:  
 💰 **Saweria**: [https://saweria.co/DeJavi08](https://saweria.co/DeJavi08)
 
 ---
 
-🚀 **Enjoy Flash Converter!** If you have any questions or issues, feel free to contact me! 😊
+## 🔍 SEO Keywords
+**YouTube playlist downloader**, **MP3 downloader**, **MP4 downloader**, **yt-dlp alternative**, **best YouTube video downloader**, **download YouTube playlist GitHub**, **convert YouTube to MP3**, **download YouTube videos without ads**, **open-source YouTube downloader**, **best YouTube to MP3 converter 2024**
+
+🚀 **Enjoy Flash Converter!** If you have any issues, feel free to contact me! 😊
 
