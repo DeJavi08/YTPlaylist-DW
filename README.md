@@ -6,7 +6,8 @@
 ## 🔥 Two Ways to Use Flash Converter
 
 - **✅ Online Version**: [yt2down.netlify.app](https://yt2down.netlify.app) (No installation required!)
-- **✅ Offline Version**: Install it on your **Windows (CMD)** or **Android (Termux)** for full control and customization.
+- **✅ Offline Version**: Install it on your **Windows (CMD)** or **Android (Termux)** for full control and customization.  
+   **Source Code**: [https://github.com/DeJavi08/YTPlaylist-DW/tree/program](https://github.com/DeJavi08/YTPlaylist-DW/tree/program)
 
 ---
 
@@ -42,91 +43,102 @@
    cd YTPlaylist-DW
    npm install
    ```
-   
-### 3. Configure `config.json`
 
-Untuk menggunakan Flash Converter, Anda perlu mengatur file `config.json` dengan path yang benar untuk `yt-dlp` dan `ffmpeg`. Berikut panduannya:
+3. **Configure `config.json`**
 
-#### Windows (CMD)
-1. Buka file `config.json` di editor teks favorit Anda (misalnya, Notepad atau Visual Studio Code).
-2. Atur path untuk `yt-dlp` dan `ffmpeg` sesuai dengan lokasi instalasi Anda. Contoh:
-   ```json
-   {
-       "ytDlpPath": "C:\\yt-dlp\\yt-dlp.exe",
-       "ffmpegPath": "C:\\ffmpeg\\bin\\ffmpeg.exe"
-   }
-   ```
-3. Simpan file setelah melakukan perubahan.
+   To use Flash Converter, you need to configure the `config.json` file with the correct paths for `yt-dlp` and `ffmpeg`. Here's how:
 
-#### Android (Termux)
-1. Anda dapat menggunakan editor teks seperti **Nano** atau **Midnight Commander (MC)** untuk mengedit `config.json`.
-   - **Menggunakan Nano**:
-     ```bash
-     apt install nano
-     nano config.json
+   - Open the `config.json` file in your favorite text editor (e.g., Notepad or Visual Studio Code).
+   - Set the paths for `yt-dlp` and `ffmpeg` according to your installation locations. Example:
+     ```json
+     {
+         "ytDlpPath": "C:\\yt-dlp\\yt-dlp.exe",
+         "ffmpegPath": "C:\\ffmpeg\\bin\\ffmpeg.exe"
+     }
      ```
-     Setelah selesai mengedit, tekan `CTRL + X`, lalu `Y`, dan `Enter` untuk menyimpan.
-   - **Menggunakan Midnight Commander (MC)**:
-     ```bash
-     apt install mc
-     mc
-     ```
-     Gunakan tombol panah untuk menavigasi, pilih `config.json`, dan tekan `F4` untuk mengedit. Setelah selesai, tekan `F2` untuk menyimpan dan `F10` untuk keluar.
-2. Atur path untuk `yt-dlp` dan `ffmpeg` seperti berikut:
-   ```json
-   {
-       "ytDlpPath": "/data/data/com.termux/files/usr/bin/yt-dlp",
-       "ffmpegPath": "/data/data/com.termux/files/usr/bin/ffmpeg"
-   }
+   - Save the file after making changes.
+
+4. **Run the Program**
+   ```bash
+   npm start
    ```
-3. Simpan file setelah melakukan perubahan.
 
 ---
 
-### 4. Run the Program
+### Android (Termux)
 
-Setelah mengatur `config.json`, Anda bisa menjalankan program dengan perintah berikut:
+1. **Install Dependencies**
+   ```bash
+   pkg update && pkg upgrade
+   pkg install nodejs python ffmpeg
+   pip install yt-dlp
+   ```
 
-#### Windows (CMD)
-```bash
-npm start
-```
+2. **Clone This Repository**
+   ```bash
+   git clone -b program --single-branch https://github.com/DeJavi08/YTPlaylist-DW.git
+   cd YTPlaylist-DW
+   npm install
+   ```
 
-#### Android (Termux)
-```bash
-npm start
-```
+3. **Configure `config.json` (for Termux)**
+   - You can use text editors like **Nano** or **Midnight Commander (MC)** to edit `config.json`.
+     - **Using Nano**:
+       ```bash
+       apt install nano
+       nano config.json
+       ```
+       After editing, press `CTRL + X`, then `Y`, and `Enter` to save.
+     - **Using Midnight Commander (MC)**:
+       ```bash
+       apt install mc
+       mc
+       ```
+       Use the arrow keys to navigate, select `config.json`, and press `F4` to edit. After editing, press `F2` to save and `F10` to exit.
+   - Set the paths for `yt-dlp` and `ffmpeg` as follows:
+     ```json
+     {
+         "ytDlpPath": "/data/data/com.termux/files/usr/bin/yt-dlp",
+         "ffmpegPath": "/data/data/com.termux/files/usr/bin/ffmpeg"
+     }
+     ```
+   - Save the file after making changes.
+
+4. **Run the Program**
+   ```bash
+   npm start
+   ```
 
 ---
 
 ## Usage
 
-Berikut adalah langkah-langkah untuk menggunakan Flash Converter:
+Here are the steps to use Flash Converter:
 
-1. **Pilih "Start Converting Youtube Playlist"**  
-   Jalankan program dan pilih opsi ini dari menu.
+1. **Select "Start Converting Youtube Playlist"**  
+   Run the program and choose this option from the menu.
 
-2. **Masukkan Path Folder Output**  
-   Tentukan folder tempat file yang diunduh akan disimpan. Contoh:  
+2. **Enter Output Folder Path**  
+   Specify the folder where the downloaded files will be saved. Example:  
    - Windows: `C:\Downloads\`  
    - Android: `/sdcard/Download/`
 
-3. **Masukkan URL Playlist YouTube**  
-   Salin URL playlist YouTube yang ingin Anda unduh. Contoh:  
+3. **Enter YouTube Playlist URL**  
+   Paste the URL of the YouTube playlist you want to download. Example:  
    `https://youtube.com/playlist?list=...`
 
-4. **Pilih Format**  
-   Pilih format yang diinginkan:  
-   - **MP3** untuk audio  
-   - **MP4** untuk video
+4. **Choose Format**  
+   Select the desired format:  
+   - **MP3** for audio  
+   - **MP4** for video
 
-5. **Pilih Kualitas**  
-   Pilih kualitas yang tersedia:  
+5. **Select Quality**  
+   Choose the available quality:  
    - **MP3**: 128kbps, 192kbps, 320kbps  
    - **MP4**: 720p, 1080p
 
-6. **Proses Unduhan Dimulai**  
-   Unduhan akan dimulai, dan Anda akan melihat progress bar yang menunjukkan status unduhan.  
+6. **Download Starts**  
+   The download will begin, and you will see a progress bar showing the download status.  
 
 ---
 
@@ -140,11 +152,10 @@ Berikut adalah langkah-langkah untuk menggunakan Flash Converter:
 
 ## Support & Donate ❤️
 
-Jika Anda merasa terbantu dengan proyek ini, Anda bisa mendukung saya melalui:  
+If you find this project helpful, you can support me via:  
 💰 **Saweria**: [https://saweria.co/DeJavi08](https://saweria.co/DeJavi08)
 
 ---
 
-🚀 **Selamat Menggunakan Flash Converter!** Jika Anda memiliki pertanyaan atau masalah, jangan ragu untuk menghubungi saya! 😊
+🚀 **Enjoy Flash Converter!** If you have any questions or issues, feel free to contact me! 😊
 
----
