@@ -4,22 +4,20 @@
 |-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 ## 🔥 Two Ways to Use Flash Converter
-
 - **✅ Online Version**: [yt2down.netlify.app](https://yt2down.netlify.app) (No installation required!)
-- **✅ Offline Version**: Install it on your **Windows (CMD)** or **Android (Termux)** for full control and customization.  
+- **✅ Offline Version**: Install it on your **Windows (CMD)**, **Kali Linux**, or **Android (Termux)** for full control and customization.  
    **Source Code**: [https://github.com/DeJavi08/YTPlaylist-DW/tree/program](https://github.com/DeJavi08/YTPlaylist-DW/tree/program)
 
 ---
 
 ## Features
-
-- ✅ Download entire YouTube playlists or individual videos
-- ✅ Choose format: **MP3 (audio)** or **MP4 (video)**
-- ✅ Select quality options:
+- ✅ **Download entire YouTube playlists or individual videos**
+- ✅ **Choose format:** MP3 (audio) or MP4 (video)
+- ✅ **Select quality options:**
   - **MP3**: 128kbps, 192kbps, 320kbps
   - **MP4**: 720p, 1080p
-- ✅ Show download progress with a progress bar
-- ✅ Fully customizable output folder
+- ✅ **Show download progress with a progress bar**
+- ✅ **Fully customizable output folder**
 
 ---
 
@@ -28,38 +26,70 @@
 ### Windows (CMD)
 
 1. **Install Dependencies**
-   - Download **Node.js**: [Node.js Official Website](https://nodejs.org/)
-   - Install **yt-dlp**:
-     ```bash
-     curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe -o C:\yt-dlp\yt-dlp.exe
-     ```
-   - Install **ffmpeg**:
-     - Download from [FFmpeg Official Website](https://ffmpeg.org/)
-     - Extract and place `ffmpeg.exe` inside `C:\ffmpeg\bin\`
+   ```sh
+   curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe -o C:\yt-dlp\yt-dlp.exe
+   ```
+   - Install **ffmpeg** from [FFmpeg Official Website](https://ffmpeg.org/)
+   - Extract and place `ffmpeg.exe` inside `C:\ffmpeg\bin\`
 
 2. **Clone This Repository & Install Node.js Packages**
-   ```bash
+   ```sh
    git clone -b program --single-branch https://github.com/DeJavi08/YTPlaylist-DW.git
    cd YTPlaylist-DW
    npm install
    ```
 
 3. **Configure `config.json`**
-
-   To use Flash Converter, you need to configure the `config.json` file with the correct paths for `yt-dlp` and `ffmpeg`. Here's how:
-
-   - Open the `config.json` file in your favorite text editor (e.g., Notepad or Visual Studio Code).
-   - Set the paths for `yt-dlp` and `ffmpeg` according to your installation locations. Example:
-     ```json
-     {
-         "ytDlpPath": "C:\\yt-dlp\\yt-dlp.exe",
-         "ffmpegPath": "C:\\ffmpeg\\bin\\ffmpeg.exe"
-     }
-     ```
-   - Save the file after making changes.
+   ```json
+   {
+       "ytDlpPath": "C:\\yt-dlp\\yt-dlp.exe",
+       "ffmpegPath": "C:\\ffmpeg\\bin\\ffmpeg.exe"
+   }
+   ```
 
 4. **Run the Program**
-   ```bash
+   ```sh
+   npm start
+   ```
+
+---
+
+### Kali Linux
+
+1. **Install Dependencies**
+   ```sh
+   sudo apt update && sudo apt upgrade -y
+   sudo apt install nodejs npm python3 python3-pip ffmpeg -y
+   ```
+
+2. **Install yt-dlp** (Recommended method from [yt-dlp Wiki](https://github.com/yt-dlp/yt-dlp/wiki/Installation))
+   ```sh
+   sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+   sudo chmod a+rx /usr/local/bin/yt-dlp
+   ```
+
+3. **Clone This Repository**
+   ```sh
+   git clone -b program --single-branch https://github.com/DeJavi08/YTPlaylist-DW.git
+   cd YTPlaylist-DW
+   npm install
+   ```
+
+4. **Configure `config.json`**
+   ```sh
+   nano config.json
+   ```
+   Ubah isinya menjadi:
+   ```json
+   {
+       "ytDlpPath": "/usr/local/bin/yt-dlp",
+       "ffmpegPath": "/usr/bin/ffmpeg"
+   }
+   ```
+   Simpan dengan **CTRL + X**, tekan **Y**, lalu Enter.
+
+5. **Run the Program**
+   ```sh
    npm start
    ```
 
@@ -68,44 +98,34 @@
 ### Android (Termux)
 
 1. **Install Dependencies**
-   ```bash
+   ```sh
    pkg update && pkg upgrade
    pkg install nodejs python ffmpeg
    pip install yt-dlp
    ```
 
 2. **Clone This Repository**
-   ```bash
+   ```sh
    git clone -b program --single-branch https://github.com/DeJavi08/YTPlaylist-DW.git
    cd YTPlaylist-DW
    npm install
    ```
 
-3. **Configure `config.json` (for Termux)**
-   - You can use text editors like **Nano** or **Midnight Commander (MC)** to edit `config.json`.
-     - **Using Nano**:
-       ```bash
-       apt install nano
-       nano config.json
-       ```
-       After editing, press `CTRL + X`, then `Y`, and `Enter` to save.
-     - **Using Midnight Commander (MC)**:
-       ```bash
-       apt install mc
-       mc
-       ```
-       Use the arrow keys to navigate, select `config.json`, and press `F4` to edit. After editing, press `F2` to save and `F10` to exit.
-   - Set the paths for `yt-dlp` and `ffmpeg` as follows:
-     ```json
-     {
-         "ytDlpPath": "/data/data/com.termux/files/usr/bin/yt-dlp",
-         "ffmpegPath": "/data/data/com.termux/files/usr/bin/ffmpeg"
-     }
-     ```
-   - Save the file after making changes.
+3. **Configure `config.json`**
+   ```sh
+   nano config.json
+   ```
+   Ubah isinya menjadi:
+   ```json
+   {
+       "ytDlpPath": "/data/data/com.termux/files/usr/bin/yt-dlp",
+       "ffmpegPath": "/data/data/com.termux/files/usr/bin/ffmpeg"
+   }
+   ```
+   Simpan dengan **CTRL + X**, tekan **Y**, lalu Enter.
 
 4. **Run the Program**
-   ```bash
+   ```sh
    npm start
    ```
 
