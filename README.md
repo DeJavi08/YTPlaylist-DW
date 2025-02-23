@@ -3,8 +3,6 @@
 | ![Logo](https://raw.githubusercontent.com/DeJavi08/YTPlaylist-DW/refs/heads/program/thunder.png) | Flash Converter is a powerful YouTube playlist downloader that allows you to download videos and audio in high quality using **yt-dlp** and **ffmpeg**. You can use it online or offline! |
 |-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
-<img src="https://raw.githubusercontent.com/DeJavi08/YTPlaylist-DW/refs/heads/program/thunder.png" alt="Logo" width="150" style="max-width: 100%; height: auto;">
-
 ## 🔥 Two Ways to Use Flash Converter
 
 - **✅ Online Version**: [yt2down.netlify.app](https://yt2down.netlify.app) (No installation required!)
