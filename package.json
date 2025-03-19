@@ -4,7 +4,7 @@
   "description": "A tool for downloading YouTube playlists, channels, or individual videos in high-quality using yt-dlp and ffmpeg.",
   "main": "downloadplaylist.js",
   "scripts": {
-    "start": "node downloadPlaylist.js"
+    "start": "node downloadplaylist.js"
   },
   "dependencies": {
     "progress": "^2.0.3",
